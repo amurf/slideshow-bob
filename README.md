@@ -1,4 +1,6 @@
 slideshow-bob
 =============
 
-responsive awesome slideshows!
+
+./bin/compile-templates templates/
+./bin/build-static-files.sh
