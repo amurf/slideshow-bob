@@ -12,14 +12,17 @@ __DATA__
 <head>
   <title>[% title %]</title>
   [% FOR css IN css_files -%]
-  <link href='[% css %] rel='stylesheet' type='text/css' title='stylesheet' />
+  <link href='[% css %]' rel='stylesheet' type='text/css' title='stylesheet' />
   [% END -%]
 </head>
   <body>
-    [% FOR image IN image_files %]
-    <img src='[% image %]' class='lazy-load' />
-    <noscript><img src='[% image %]' /></noscript>
-    [% END -%]
-
+    <div class='wrapper'>
+      <div class='slideshow-bob'>
+        [% FOR image IN image_files %]
+        <img src='[% image %]' class='lazy-load' />
+        <noscript><img src='[% image %]' /></noscript>
+        [% END -%]
+      </div>
+    </div>
   </body>
 </html>
