@@ -1,0 +1,25 @@
+my @image_files = <images/*>;
+my @css_files   = <css/*>;
+
+return {
+    image_files => \@image_files,
+    css_files   => \@css_files,
+    title       => 'slideshow bob',
+};
+
+__DATA__
+<html>
+<head>
+  <title>[% title %]</title>
+  [% FOR css IN css_files -%]
+  <link href='[% css %] rel='stylesheet' type='text/css' title='stylesheet' />
+  [% END -%]
+</head>
+  <body>
+    [% FOR image IN image_files %]
+    <img src='[% image %]' class='lazy-load' />
+    <noscript><img src='[% image %]' /></noscript>
+    [% END -%]
+
+  </body>
+</html>

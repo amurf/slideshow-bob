@@ -1,0 +1,14 @@
+#!/usr/bin/env perl
+
+use Template;
+use autodie;
+
+my $tt2 = Template->new;
+for (<$ARGV[0]/*.tt2>) {
+    process($_);
+}
+
+sub process { 
+    my $filename = shift;
+    $tt2->process( \*DATA , require $filename );
+}
