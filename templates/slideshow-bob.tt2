@@ -17,12 +17,13 @@ __DATA__
 </head>
   <body>
     <div class='wrapper'>
-      <div class='slideshow-bob'>
+      <div id='slideshow-bob'>
         [% FOR image IN image_files %]
         <img src='[% image %]' class='lazy-load' />
         <noscript><img src='[% image %]' /></noscript>
         [% END -%]
       </div>
     </div>
+  <script src='js/lazy-loader.js' type='text/javascript'></script>
   </body>
 </html>

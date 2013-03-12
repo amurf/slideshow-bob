@@ -4,20 +4,35 @@
 @displayed-images: 4;
 @slideshow-width: @image-width * @displayed-images;
 
-.slideshow-bob img {
+#left-button {
+    position: relative;
+    left: -105%;
+    top: -50%;
+}
+
+#right-button {
+    position: relative;
+    top: -50%;
+    left: -5%;
+}
+
+#slideshow-bob img.lazy-load {
+    display: none;
+}
+
+#slideshow-bob img {
     width: @image-width; 
     height: @image-height;
 }
-.slideshow-bob {
-    width: @slideshow-width;
+
+#slideshow-bob {
+    width: 100%; 
     height: @image-height;
     white-space: nowrap;
-    text-align: center;
     overflow-x: scroll;
-    overflow-y: hidden;
+    overflow-y: overlay;
 }
 
 .wrapper {
     width: @slideshow-width;
-    overflow: hidden;
 }
