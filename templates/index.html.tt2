@@ -1,10 +1,12 @@
-my @image_files = <images/*>;
-my @css_files   = <css/*>;
+my @image_files         = <images/*>;
+my @css_files           = <css/*>;
+my @minified_js_files   = <js/*.min.js>;
 
 return {
-    image_files => \@image_files,
-    css_files   => \@css_files,
-    title       => 'slideshow bob',
+    image_files       => \@image_files,
+    css_files         => \@css_files,
+    minified_js_files => \@minified_js_files,
+    title             => 'slideshow bob',
 };
 
 __DATA__
@@ -24,6 +26,8 @@ __DATA__
         [% END -%]
       </div>
     </div>
-  <script src='js/lazy-loader.js' type='text/javascript'></script>
+  [% FOR js IN minified_js_files -%]
+  <script src='[% js %]' type='text/javascript'></script>
+  [% END -%]
   </body>
 </html>
