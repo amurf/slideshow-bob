@@ -1,6 +1,6 @@
 var config = {
     'slideshow_id': 'slideshow-bob',
-    'items_to_display': 4,
+    'items_to_display': 4
 };
 
 

@@ -1,7 +1,7 @@
-@image-width: 15.0em;
-@image-height: 15.0em;
+@image-width: [% image_width %];
+@image-height: [% image_height %];
 
-@displayed-images: 4;
+@displayed-images: [% displayed_images %];
 @slideshow-width: @image-width * @displayed-images;
 
 #left-button {
