@@ -1,1 +1,1 @@
-rm js/*.min.js js/*.js less/*.less templates/*.html css/*
+rm -rf css/*.css js/*.js less/*.less templates/*.html
