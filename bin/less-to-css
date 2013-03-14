@@ -1,0 +1,7 @@
+#!/bin/sh
+
+CMD="lessc --yui-compress"
+
+for file in less/*.less 
+    do $CMD "$file" > "${file//less/css}"
+done
