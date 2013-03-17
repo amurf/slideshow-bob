@@ -21,9 +21,8 @@ __DATA__
     <div class='wrapper'>
       <div id='slideshow-bob'>
         [% FOR image IN image_files %]
-        <img src='[% image %]' class='lazy-load' />
-        <noscript><img src='[% image %]' /></noscript>
-        [% END -%]
+        <noscript img-src='[% image %]' class='lazy-load'><img src='[% image %]' /></noscript>
+        [%- END -%]
       </div>
     </div>
   [% FOR js IN minified_js_files -%]
