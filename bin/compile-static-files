@@ -1,11 +1,14 @@
 #!/usr/bin/env perl
 
 use Template;
+use YAML::XS qw/LoadFile/;
 use autodie;
 
+my $config = LoadFile 'config.yaml';
 my $tt2 = Template->new;
-for (<templates/*.tt2>) {
-    $tt2->process( \*DATA, require $_, outfile($_) );
+
+for ( <js/*.tt2>, <less/*.tt2> ) {
+    $tt2->process( $_, $config->{slideshow}, outfile($_) );
 }
 
 sub outfile {

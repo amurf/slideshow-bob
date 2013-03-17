@@ -1,5 +1,5 @@
 ./bin/clean
-./bin/compile-templates
+./bin/compile-static-files
 ./bin/minify-js
 ./bin/less-to-css
 ./bin/compile-templates

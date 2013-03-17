@@ -95,7 +95,7 @@ slideshow.append = function(element) {
     this.fetch().appendChild(element);
 }
 
-slideshow.node_to_array = function(nodelist) {
+slideshow.nodelist_to_array = function(nodelist) {
     var array = [];
     for (var x = 0; x < nodelist.length; x++) {
         array.push(nodelist[x]);
@@ -104,7 +104,7 @@ slideshow.node_to_array = function(nodelist) {
 }
 
 slideshow.clear = function() {
-    var images_to_clear = this.node_to_array(this.fetch_by_class('js-loaded'));
+    var images_to_clear = this.nodelist_to_array(this.fetch_by_class('js-loaded'));
     for (var x = 0; x < images_to_clear.length; x++) {
         this.fetch().removeChild(images_to_clear[x]);
     }
