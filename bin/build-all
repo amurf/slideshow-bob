@@ -1,3 +1,4 @@
+./bin/clean
 ./bin/compile-templates
 ./bin/minify-js
 ./bin/less-to-css

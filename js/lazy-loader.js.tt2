@@ -1,67 +1,117 @@
-var config = {
+slideshow = {};
+
+slideshow.config = {
     'slideshow_id': 'slideshow-bob',
     'displayed_images': [% displayed_images %]
 };
 
-var slideshow_cache = [];
+slideshow.cache = {
+    'images':  [], 
+    'min_img': 0,
+    'max_img': [% displayed_images %]
+};
 
-init_slideshow(config);
 
-function init_slideshow( config ) {
+slideshow.init = function() {
+    var that = this;
 
-    var slideshow = get_slideshow();
-    slideshow.style.overflow='hidden';
+    this.fetch().style.overflow='hidden';
 
-    create_button('right-button', '>');
-    create_button('left-button', '<');
-    display_images( config.displayed_images );
+    var cache    = this.cache;
+    cache.images = this.all_images();
+    
+    this.display_images(cache.images, 
+                        cache.min_img,
+                        cache.max_img);
+    
+    var next = this.create_button('right-button', '>');
+    var prev = this.create_button('left-button', '<');
 
+    next.onclick = function() {
+        cache.min_img += 1;
+        cache.max_img += 1;
+        that.refresh();
+    };
+
+    prev.onclick = function() {
+        cache.min_img -= 1;
+        cache.max_img -= 1;
+        that.refresh();
+    }
+
+    this.append(next);
+    this.append(prev);
 }
 
+slideshow.all_images = function() {
+    var lazy_load  = this.fetch_by_class('lazy-load');
+    var all_images = [];
+    for (var x = 0; x < lazy_load.length; x++) {
+        all_images.push(lazy_load[x].getAttribute('img-src'));
+    }
+    return all_images;
+}
 
-// TODO: Make this more functional. Return a list to display
-// then calls a function to append a list to our slideshow.
-function display_images( images_to_display ) {
-    var lazy_loader = fetch_by_class('lazy-load');
-    for ( var x = 0; x < lazy_loader.length; x++ ) {
-        var element = lazy_loader[x];
-        slideshow_cache.push(element);
-        if ( x < images_to_display ) {
-            element.style.display='inline'; 
-            continue;
-        } else {
-            // TODO: need a better way to prevent images?
-            // Most likely will want to have images as <noscript> 
-            // and steal the src from them to populate it dynamically
-            // with javascript. If its turned off you get all the images?
-            // could work.
-            //element.src = 'lazy-loaded';
-        }
+slideshow.display_images = function(images, start, end) {
+    for ( var current = start; current < end; current++ ) {
+        var new_image = this.create_image(images[current], 'js-loaded');
+        this.append(new_image);
     }
 }
 
-function get_slideshow() {
-    return document.getElementById(config.slideshow_id);
+slideshow.fetch = function() {
+    return document.getElementById(slideshow.config.slideshow_id);
 }
 
-function create_element( element_type, element_id, element_text ) {
-    var element = document.createElement(element_type);
-    element.id          = element_id;
-    element.textContent = element_text;
+slideshow.create_element = function(type, id) {
+    var element = document.createElement(type);
+    element.id  = id;
     return element;
 }
 
-// TODO: Think these 2 through. Should we just have create_element and not simplify
-// it. Might be okay but just THINK IT THROUGH.
-function create_button( id, text ) {
-    var button = create_element('button', id, text);
-    append_slideshow( button );
+slideshow.create_button = function(id, text) {
+    var button         = this.create_element('button', id);
+    button.textContent = text;
+    return button;
 }
 
-function fetch_by_class( class_name ) {
+slideshow.create_image = function(src, class_name){
+    var img        = document.createElement('img');
+    img.src        = src;
+    img.className  = class_name;
+    return img;
+}
+
+slideshow.fetch_by_class = function(class_name) {
     return document.getElementsByClassName(class_name);
 }
 
-function append_slideshow( element ) {
-    get_slideshow().appendChild( element );
+slideshow.append = function(element) {
+    this.fetch().appendChild(element);
 }
+
+slideshow.node_to_array = function(nodelist) {
+    var array = [];
+    for (var x = 0; x < nodelist.length; x++) {
+        array.push(nodelist[x]);
+    }
+    return array;
+}
+
+slideshow.clear = function() {
+    var images_to_clear = this.node_to_array(this.fetch_by_class('js-loaded'));
+    for (var x = 0; x < images_to_clear.length; x++) {
+        console.log(x);
+        this.fetch().removeChild(images_to_clear[x]);
+    }
+}
+
+slideshow.refresh = function() {
+    var cache = this.cache;
+    this.clear();
+    this.display_images(cache.images,
+                        cache.min_img,
+                        cache.max_img);
+}
+
+slideshow.init();
