@@ -1,20 +1,47 @@
 var config = {
     'slideshow_id': 'slideshow-bob',
-    'items_to_display': 4
+    'displayed_images': [% displayed_images %]
 };
 
+var slideshow_cache = [];
 
-create_button('right-button', '>');
-create_button('left-button', '<');
+init_slideshow(config);
 
-var lazy_loader = document.body.getElementsByClassName('lazy-load');
-for ( var x = 0; x < lazy_loader.length; x++ ) {
-  if ( x < config.items_to_display ) {
-      lazy_loader[x].style.display='inline'; 
-      continue;
-  } else {
-      //lazy_loader[x].src = 'lazy-loaded';
-  }
+function init_slideshow( config ) {
+
+    var slideshow = get_slideshow();
+    slideshow.style.overflow='hidden';
+
+    create_button('right-button', '>');
+    create_button('left-button', '<');
+    display_images( config.displayed_images );
+
+}
+
+
+// TODO: Make this more functional. Return a list to display
+// then calls a function to append a list to our slideshow.
+function display_images( images_to_display ) {
+    var lazy_loader = fetch_by_class('lazy-load');
+    for ( var x = 0; x < lazy_loader.length; x++ ) {
+        var element = lazy_loader[x];
+        slideshow_cache.push(element);
+        if ( x < images_to_display ) {
+            element.style.display='inline'; 
+            continue;
+        } else {
+            // TODO: need a better way to prevent images?
+            // Most likely will want to have images as <noscript> 
+            // and steal the src from them to populate it dynamically
+            // with javascript. If its turned off you get all the images?
+            // could work.
+            //element.src = 'lazy-loaded';
+        }
+    }
+}
+
+function get_slideshow() {
+    return document.getElementById(config.slideshow_id);
 }
 
 function create_element( element_type, element_id, element_text ) {
@@ -24,11 +51,17 @@ function create_element( element_type, element_id, element_text ) {
     return element;
 }
 
+// TODO: Think these 2 through. Should we just have create_element and not simplify
+// it. Might be okay but just THINK IT THROUGH.
 function create_button( id, text ) {
     var button = create_element('button', id, text);
     append_slideshow( button );
 }
 
+function fetch_by_class( class_name ) {
+    return document.getElementsByClassName(class_name);
+}
+
 function append_slideshow( element ) {
-    document.getElementById(config.slideshow_id).appendChild( element );
+    get_slideshow().appendChild( element );
 }

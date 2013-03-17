@@ -6,7 +6,7 @@
 
 #left-button {
     position: relative;
-    left: -105%;
+    left: -104%;
     top: -50%;
 }
 
