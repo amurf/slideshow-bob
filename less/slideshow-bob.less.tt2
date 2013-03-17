@@ -4,16 +4,20 @@
 @displayed-images: [% displayed_images %];
 @slideshow-width: @image-width * @displayed-images;
 
-#left-button {
+#prev-button {
     position: absolute;
-    left: 100;
-    top: 1;
+    left: 25;
+    top: 100;
 }
 
-#right-button {
+#next-button {
     position: absolute;
-    top: 1;
+    top: 100;
     right: 250;
+}
+
+#next-button, #prev-button {
+    border: 0.2em solid black
 }
 
 #slideshow-bob img.lazy-load {
@@ -24,6 +28,7 @@
     width: @image-width; 
     height: @image-height;
 }
+
 
 #slideshow-bob {
     width: 100%; 

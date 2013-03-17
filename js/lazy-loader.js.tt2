@@ -24,19 +24,23 @@ slideshow.init = function() {
                         cache.min_img,
                         cache.max_img);
     
-    var next = this.create_button('right-button', '>');
-    var prev = this.create_button('left-button', '<');
+    var next = this.create_button('next-button', 'images/next.gif');
+    var prev = this.create_button('prev-button', 'images/prev.gif');
 
     next.onclick = function() {
-        cache.min_img += 1;
-        cache.max_img += 1;
-        that.refresh();
+        if (that.cache.max_img < that.cache.images.length) {
+            cache.min_img += 1;
+            cache.max_img += 1;
+            that.refresh();
+        }
     };
 
     prev.onclick = function() {
-        cache.min_img -= 1;
-        cache.max_img -= 1;
-        that.refresh();
+        if (that.cache.min_img > 0) {
+            cache.min_img -= 1;
+            cache.max_img -= 1;
+            that.refresh();
+        }
     }
 
     this.append(next);
@@ -69,9 +73,10 @@ slideshow.create_element = function(type, id) {
     return element;
 }
 
-slideshow.create_button = function(id, text) {
-    var button         = this.create_element('button', id);
-    button.textContent = text;
+slideshow.create_button = function(id, src) {
+    var button  = this.create_element('input', id);
+    button.src  = src;
+    button.type = 'image';
     return button;
 }
 

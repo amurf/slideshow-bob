@@ -1,4 +1,4 @@
-my @image_files         = <images/*>;
+my @image_files         = <images/slideshow/*>;
 my @css_files           = <css/*>;
 my @minified_js_files   = <js/*.min.js>;
 
