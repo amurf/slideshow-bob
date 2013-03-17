@@ -5,15 +5,15 @@
 @slideshow-width: @image-width * @displayed-images;
 
 #left-button {
-    position: relative;
-    left: -104%;
-    top: -50%;
+    position: absolute;
+    left: 100;
+    top: 1;
 }
 
 #right-button {
-    position: relative;
-    top: -50%;
-    left: -5%;
+    position: absolute;
+    top: 1;
+    right: 250;
 }
 
 #slideshow-bob img.lazy-load {
