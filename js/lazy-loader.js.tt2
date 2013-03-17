@@ -101,7 +101,6 @@ slideshow.node_to_array = function(nodelist) {
 slideshow.clear = function() {
     var images_to_clear = this.node_to_array(this.fetch_by_class('js-loaded'));
     for (var x = 0; x < images_to_clear.length; x++) {
-        console.log(x);
         this.fetch().removeChild(images_to_clear[x]);
     }
 }
