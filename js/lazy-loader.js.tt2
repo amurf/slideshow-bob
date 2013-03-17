@@ -13,6 +13,8 @@ slideshow.cache = {
 
 
 slideshow.init = function() {
+    var that = this;
+
     this.fetch().style.overflow='hidden';
 
     var cache    = this.cache;
@@ -24,6 +26,18 @@ slideshow.init = function() {
     
     var next = this.create_button('right-button', '>');
     var prev = this.create_button('left-button', '<');
+
+    next.onclick = function() {
+        cache.min_img += 1;
+        cache.max_img += 1;
+        that.refresh();
+    };
+
+    prev.onclick = function() {
+        cache.min_img -= 1;
+        cache.max_img -= 1;
+        that.refresh();
+    }
 
     this.append(next);
     this.append(prev);
@@ -40,7 +54,7 @@ slideshow.all_images = function() {
 
 slideshow.display_images = function(images, start, end) {
     for ( var current = start; current < end; current++ ) {
-        var new_image = this.create_image(images[current]);
+        var new_image = this.create_image(images[current], 'js-loaded');
         this.append(new_image);
     }
 }
@@ -61,9 +75,10 @@ slideshow.create_button = function(id, text) {
     return button;
 }
 
-slideshow.create_image = function(src) {
-    var img = document.createElement('img');
-    img.src = src;
+slideshow.create_image = function(src, class_name){
+    var img        = document.createElement('img');
+    img.src        = src;
+    img.className  = class_name;
     return img;
 }
 
@@ -73,6 +88,30 @@ slideshow.fetch_by_class = function(class_name) {
 
 slideshow.append = function(element) {
     this.fetch().appendChild(element);
+}
+
+slideshow.node_to_array = function(nodelist) {
+    var array = [];
+    for (var x = 0; x < nodelist.length; x++) {
+        array.push(nodelist[x]);
+    }
+    return array;
+}
+
+slideshow.clear = function() {
+    var images_to_clear = this.node_to_array(this.fetch_by_class('js-loaded'));
+    for (var x = 0; x < images_to_clear.length; x++) {
+        console.log(x);
+        this.fetch().removeChild(images_to_clear[x]);
+    }
+}
+
+slideshow.refresh = function() {
+    var cache = this.cache;
+    this.clear();
+    this.display_images(cache.images,
+                        cache.min_img,
+                        cache.max_img);
 }
 
 slideshow.init();
